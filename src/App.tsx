@@ -1,14 +1,14 @@
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
+import { Toaster } from "react-hot-toast";
 
-
-function App() {
-
+const App = () => {
   return (
-    <>
-      <div>
-        <h1 className="text-indigo-700">Hello</h1>
-        </div>
-    </>
-  )
-}
+    <main>
+      <RouterProvider router={router} />
+      <Toaster />
+    </main>
+  );
+};
 
-export default App
+export default App;

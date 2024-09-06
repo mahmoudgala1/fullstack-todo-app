@@ -52,6 +52,11 @@ const Register = () => {
       toast.error(`${errorObj.response?.data.error.message}`, {
         position: "bottom-center",
         duration: 4000,
+        style:{
+          backgroundColor: "black",
+          color: "white",
+          width: "fit-content",
+        }
       });
     } finally {
       setIsLoading(false);

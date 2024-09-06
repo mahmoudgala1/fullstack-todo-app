@@ -9,7 +9,7 @@ export const REGISTER_FORM: IRegisterInput[] = [
   },
   {
     name: "email",
-    type: "email",
+    type: "text",
     placeholder: "Email",
     validation: { required: true, pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}/ },
   },

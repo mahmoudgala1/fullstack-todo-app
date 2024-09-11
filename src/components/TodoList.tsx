@@ -3,11 +3,15 @@ import Button from "./ui/Button";
 import axiosInstance from "../config/axios.config";
 import { useQuery } from "@tanstack/react-query";
 import useAuthenticatedQuery from "../hooks/useAuthenticatedQuery";
+import Modal from "./ui/Modal";
+import Input from "./ui/Input";
 
 const TodoList = () => {
   const storageKey = "loggedInUser";
   const userDataString = localStorage.getItem(storageKey);
   const userData = userDataString ? JSON.parse(userDataString) : null;
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const { isLoading, data, error } = useAuthenticatedQuery({
     queryKey: ["todos"],
@@ -18,6 +22,10 @@ const TodoList = () => {
       },
     },
   });
+
+  const onToggleEditModal = () => {
+    setIsEditModalOpen(!isEditModalOpen);
+  };
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -33,7 +41,9 @@ const TodoList = () => {
               {idx + 1} - {todo.title}
             </p>
             <div className="flex items-center justify-end w-full space-x-3">
-              <Button size={"sm"}>Edit</Button>
+              <Button size={"sm"} onClick={onToggleEditModal}>
+                Edit
+              </Button>
               <Button variant={"danger"} size={"sm"}>
                 Remove
               </Button>
@@ -43,6 +53,19 @@ const TodoList = () => {
       ) : (
         <h3>No todos yet</h3>
       )}
+      <Modal
+        isOpen={isEditModalOpen}
+        closeModal={onToggleEditModal}
+        title="Edit this todo"
+      >
+        <Input value={"Edit Todo"} />
+        <div className="flex items-center space-x-3 mt-4">
+          <Button className="bg-indigo-700 hover:bg-indigo-800">Update</Button>
+          <Button variant={"cancel"} onClick={onToggleEditModal}>
+            Cancle
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };
